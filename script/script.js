@@ -1,3 +1,4 @@
+//Обработчик событий отслеживает загрузку контента на странице
 document.addEventListener('DOMContentLoaded', function () {
     const btnOpenModal = document.querySelector('#btnOpenModal')
     const modalBlock = document.querySelector('#modalBlock')
@@ -7,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const nextButton = document.querySelector('#next')
     const prevButton = document.querySelector('#prev')
 
-
+    //Массив объектов с вопросами и ответами
     const questions = [
         {
             question: "Какого цвета бургер?",
@@ -94,8 +95,11 @@ document.addEventListener('DOMContentLoaded', function () {
         modalBlock.classList.remove('d-block');
     })
 
-    //Основная функция, срабатывает при нажатии на кнопку
+
+    //Основная функция тестирования, срабатывает при нажатии на кнопку
     const playTest = () => {
+
+        //переменная с номером вопроса
         let numberQuestion = 0;
 
         //Вывод ответов через цикл, каждый цикл создается див, куда заносится информация
@@ -117,10 +121,28 @@ document.addEventListener('DOMContentLoaded', function () {
         //Отрисовывает в модальное окно вопросы и ответы
         const renderQuestions = (indexQuestion) => {
             formAnswers.innerHTML = '';
-            questionTitle.textContent = `${questions[indexQuestion].question}`;
-            renderAnswers(indexQuestion);
+
+            if(numberQuestion >= 0 && numberQuestion <= questions.length - 1) {
+                //рендер вопроса
+                questionTitle.textContent = `${questions[indexQuestion].question}`;
+                //запуск функции для рендеринга ответа
+                renderAnswers(indexQuestion);
+                nextButton.classList.remove('d-none');
+                prevButton.classList.remove('d-none')
+            }
+
+            if (numberQuestion === 0) {
+                prevButton.classList.add('d-none');
+            }
+            if (numberQuestion === questions.length - 1) {
+                nextButton.classList.add('d-none');
+            }
+
         }
+
+        //запуск функции
         renderQuestions(numberQuestion);
+
 
         //Кнопки переключения вопросов
         nextButton.onclick = () => {
