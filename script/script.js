@@ -99,6 +99,8 @@ document.addEventListener('DOMContentLoaded', function () {
     //Основная функция тестирования, срабатывает при нажатии на кнопку
     const playTest = () => {
 
+        //сюда заносятся все ответы
+        const finalAnswers = {}
         //переменная с номером вопроса
         let numberQuestion = 0;
 
@@ -134,8 +136,13 @@ document.addEventListener('DOMContentLoaded', function () {
             if (numberQuestion === 0) {
                 prevButton.classList.add('d-none');
             }
-            if (numberQuestion === questions.length - 1) {
+            // if (numberQuestion === questions.length - 1) {
+            //     nextButton.classList.add('d-none');
+            // }
+
+            if (numberQuestion === questions.length) {
                 nextButton.classList.add('d-none');
+                formAnswers.textContent = 'Спасибо'
             }
 
         }
@@ -143,9 +150,21 @@ document.addEventListener('DOMContentLoaded', function () {
         //запуск функции
         renderQuestions(numberQuestion);
 
+        const checkAnswer = () => {
+            console.log('check')
+            const obj = {};
+
+            const inputs = [...formAnswers.elements].filter((input) => input.checked)
+            inputs.forEach((input) => {
+                obj[questions[numberQuestion].question] = 'value'
+            })
+
+        }
+
 
         //Кнопки переключения вопросов
         nextButton.onclick = () => {
+            checkAnswer();
             numberQuestion++;
             renderQuestions(numberQuestion);
         }
